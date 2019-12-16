@@ -8,5 +8,5 @@ jobs:
       - uses: james-pickett/godot-build-action@master
         with:
           build-file-name: godot-hello-cicd
-          android_debug_username: { { secrets.ANDROID_DEBUG_USERNAME } }
-          android_debug_password: { { secrets.ANDROID_DEBUG_PASSWORD } }
+          android_debug_username: {{ secrets.ANDROID_DEBUG_USERNAME }}
+          android_debug_password: {{ secrets.ANDROID_DEBUG_PASSWORD }}
