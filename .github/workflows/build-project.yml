@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        path: /project
+        with:
+          path: ./project
       - uses: james-pickett/godot-build-action@master
         with:
           build-file-name: godot-hello-cicd
