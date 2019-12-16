@@ -10,3 +10,7 @@ jobs:
           build-file-name: godot-hello-cicd
           android_debug_username: ${ { secrets.ANDROID_DEBUG_USERNAME } }
           android_debug_password: ${ { secrets.ANDROID_DEBUG_PASSWORD } }
+      - uses: actions/upload-artifact@v1
+        with:
+          name: godot-hello-cicd.apk
+          path: /builds/android/
