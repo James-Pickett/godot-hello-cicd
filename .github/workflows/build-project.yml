@@ -4,8 +4,8 @@ jobs:
   build-godot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        path: ./project
+      - uses: actions/checkout@v2
+        path: /project
       - uses: james-pickett/godot-build-action@master
         with:
           build-file-name: godot-hello-cicd
