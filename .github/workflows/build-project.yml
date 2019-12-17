@@ -13,4 +13,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd.apk
-          path: ./build/android/
+          path: ./build/android/godot-hello-cicd.apk
