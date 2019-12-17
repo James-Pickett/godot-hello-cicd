@@ -4,10 +4,9 @@ jobs:
   build-godot:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v2
 
-      - uses: james-pickett/godot-build-action@master      
+      - uses: james-pickett/godot-build-action@master
         with:
           build_file_name: godot-hello-cicd
           android_debug_username: ${{ secrets.ANDROID_DEBUG_USERNAME }}
@@ -26,8 +25,8 @@ jobs:
           path: ./build/linux/godot-hello-cicd
 
       - name: upload windows
-         uses: actions/upload-artifact@v1
-         with:
+        uses: actions/upload-artifact@v1
+        with:
           name: godot-hello-cicd.exe
           path: ./build/windows/godot-hello-cicd.exe
 
