@@ -21,7 +21,7 @@ jobs:
       - name: upload linux
         uses: actions/upload-artifact@v1
         with:
-          name: godot-hello-cicd
+          name: godot-hello-cicd-linux
           path: ./build/linux/godot-hello-cicd
 
       - name: upload windows
@@ -30,13 +30,13 @@ jobs:
           name: godot-hello-cicd.exe
           path: ./build/windows/godot-hello-cicd.exe
 
-      - name: upload MAC OSX
+      - name: upload mac osx
         uses: actions/upload-artifact@v1
         with:
-          name: godot-hello-cicd
+          name: godot-hello-cicd-osx
           path: ./build/mac/godot-hello-cicd
 
-      - name: upload HTML5
+      - name: upload html5
         uses: actions/upload-artifact@v1
         with:
           name: index.html
