@@ -15,7 +15,7 @@ jobs:
       - name: upload android
         uses: actions/upload-artifact@v1
         with:
-          name: godot-hello-cicd.apk
+          name: godot-hello-cicd-android
           path: ./build/android/godot-hello-cicd.apk
 
       - name: upload linux
@@ -27,7 +27,7 @@ jobs:
       - name: upload windows
         uses: actions/upload-artifact@v1
         with:
-          name: godot-hello-cicd.exe
+          name: godot-hello-cicd-windows
           path: ./build/windows/godot-hello-cicd.exe
 
       - name: upload mac osx
@@ -39,5 +39,5 @@ jobs:
       - name: upload html5
         uses: actions/upload-artifact@v1
         with:
-          name: index.html
+          name: godot-hello-cicd-web
           path: ./build/html5/index.html
