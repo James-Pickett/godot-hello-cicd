@@ -7,10 +7,16 @@ jobs:
       - uses: actions/checkout@v2
       - uses: james-pickett/godot-build-action@master
         with:
-          build-file-name: godot-hello-cicd
+          build_file_name: godot-hello-cicd
           android_debug_username: ${{ secrets.ANDROID_DEBUG_USERNAME }}
           android_debug_password: ${{ secrets.ANDROID_DEBUG_PASSWORD }}
       - uses: actions/upload-artifact@v1
+        name: upload android
         with:
           name: godot-hello-cicd.apk
           path: ./build/android/godot-hello-cicd.apk
+      - uses: actions/upload-artifact@v1
+        name: upload linux
+        with:
+          name: godot-hello-cicd
+          path: ./build/linux/godot-hello-cicd
