@@ -1,12 +1,14 @@
-name: Build Project
+name: Build and Release
 on: [push]
 jobs:
-  build-godot:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: check out code
+        uses: actions/checkout@v2
 
-      - uses: james-pickett/godot-build-action@master
+      - name: build project
+        uses: james-pickett/godot-build-action@master
         with:
           build_file_name: godot-hello-cicd
           android_debug_username: ${{ secrets.ANDROID_DEBUG_USERNAME }}
@@ -16,28 +18,28 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd-android
-          path: ./build/android
+          path: ./build/android/godot-hello-cicd.apk
 
       - name: upload linux
         uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd-linux
-          path: ./build/linux
+          path: ./build/linux/godot-hello-cicd
 
       - name: upload windows
         uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd-windows
-          path: ./build/windows
+          path: ./build/windows/godot-hello-cicd.exe
 
       - name: upload mac osx
         uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd-osx
-          path: ./build/mac
+          path: ./build/mac/godot-hello-cicd
 
       - name: upload html5
         uses: actions/upload-artifact@v1
         with:
           name: godot-hello-cicd-web
-          path: ./build/html5
+          path: ./build/html5/index.html
