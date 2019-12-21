@@ -47,7 +47,7 @@ jobs:
 
       - name: build release tag from branch name
         run: echo ::set-output name=tag::jaypickle/godot-build:${GITHUB_REF##*/}
-         id: tag
+        id: tag
 
       - name: create release
         id: create_release
