@@ -46,8 +46,8 @@ jobs:
           path: ./build/html5/
 
       - name: build release tag from branch name
-          run: echo ::set-output name=tag::jaypickle/godot-build:${GITHUB_REF##*/}
-          id: tag
+        run: echo ::set-output name=tag::jaypickle/godot-build:${GITHUB_REF##*/}
+         id: tag
 
       - name: create release
         id: create_release
@@ -70,3 +70,20 @@ jobs:
           asset_path: ./build/android/godot-hello-cicd.apk
           asset_name: godot-hello-cicd-android.apk
           asset_content_type: application/vnd.android.package-archive
+
+      - name: Send mail
+        uses: dawidd6/action-send-mail@master
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: ${{ github.repository }} Release
+          # Literal body:
+          body: |
+            Android Debug
+            ${{ steps.upload-release-asset-android.outputs.upload_url }}
+          to: ${{secrets.RELEASE_EMAIL_RECIPIENTS}}
+          from: ${{ secrets.MAIL_USERNAME }}
+          # Optional content type:
+          content_type: text/html
