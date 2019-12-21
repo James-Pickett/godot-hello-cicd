@@ -46,7 +46,7 @@ jobs:
           path: ./build/html5/
 
       - name: build release tag from branch name
-        run: echo ::set-output name=tag::${GITHUB_REF##*/}
+        run: echo ::set-output name=tag::${GITHUB_REF##*/}-${GITHUB_ACTION}
         id: tag
 
       - name: create release
