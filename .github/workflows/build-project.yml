@@ -84,8 +84,8 @@ jobs:
           # Literal body:
           body: |
             Android Debug
-            ${{ steps.upload-release-asset-android.outputs.upload_url }}
+            ${{ steps.upload-release-asset-android.outputs.browser_download_url }}
           to: ${{secrets.RELEASE_EMAIL_RECIPIENTS}}
-          from: ${{ secrets.MAIL_USERNAME }}
+          from: ${{ github.repository }}
           # Optional content type:
           content_type: text/html
