@@ -2,7 +2,7 @@ name: Build and Release
 on: [push]
 jobs:
   build:
-    name: build
+    name: build and release
     runs-on: ubuntu-latest
     steps:
       - name: check out code
@@ -15,36 +15,6 @@ jobs:
           android_debug_username: ${{ secrets.ANDROID_DEBUG_USERNAME }}
           android_debug_password: ${{ secrets.ANDROID_DEBUG_PASSWORD }}
 
-      - name: upload android
-        uses: actions/upload-artifact@v1
-        with:
-          name: godot-hello-cicd-android
-          path: ./build/android/
-
-      - name: upload linux
-        uses: actions/upload-artifact@v1
-        with:
-          name: godot-hello-cicd-linux
-          path: ./build/linux/
-
-      - name: upload windows
-        uses: actions/upload-artifact@v1
-        with:
-          name: godot-hello-cicd-windows
-          path: ./build/windows/
-
-      - name: upload mac osx
-        uses: actions/upload-artifact@v1
-        with:
-          name: godot-hello-cicd-osx
-          path: ./build/mac/
-
-      - name: upload html5
-        uses: actions/upload-artifact@v1
-        with:
-          name: godot-hello-cicd-web
-          path: ./build/html5/
-
       - name: build release tag from branch name
         run: echo ::set-output name=tag::${GITHUB_REF##*/}-${GITHUB_SHA}
         id: tag
@@ -56,7 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
-          release_name: Release ${{ steps.tag.outputs.tag }}
+          release_name: ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: true
 
@@ -66,7 +36,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
+          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/android/godot-hello-cicd.apk
           asset_name: godot-hello-cicd-android.apk
           asset_content_type: application/vnd.android.package-archive
@@ -74,7 +46,7 @@ jobs:
       - name: Send mail
         uses: dawidd6/action-send-mail@master
         with:
-          server_address: smtp.gmail.com
+          server_address: smtp.sendgrid.net
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
@@ -82,8 +54,8 @@ jobs:
           # Literal body:
           body: |
             Android Debug
-            ${{ steps.upload-release-asset-android.outputs.upload_url }}
+            ${{ steps.upload-release-asset-android.outputs.browser_download_url }}
           to: ${{secrets.RELEASE_EMAIL_RECIPIENTS}}
-          from: ${{ secrets.MAIL_USERNAME }}
+          from: ${{ github.repository }}
           # Optional content type:
           content_type: text/html
