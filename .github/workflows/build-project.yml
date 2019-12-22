@@ -46,7 +46,7 @@ jobs:
           path: ./build/html5/
 
       - name: build release tag from branch name
-        run: echo ::set-output name=tag::${GITHUB_REF##*/}
+        run: echo ::set-output name=tag::${GITHUB_REF##*/}-${GITHUB_SHA}
         id: tag
 
       - name: create release
@@ -66,7 +66,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
+          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/android/godot-hello-cicd.apk
           asset_name: godot-hello-cicd-android.apk
           asset_content_type: application/vnd.android.package-archive
